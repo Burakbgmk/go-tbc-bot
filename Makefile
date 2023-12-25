@@ -42,6 +42,9 @@ clean:
 css-watch:
 	~/bin/tailwindcss -i ./styles/input.css -o ./styles/output.css --watch
 
+css:
+	~/bin/tailwindcss -i ./styles/input.css -o ./styles/output.css --minify
+
 # Live Reload
 watch:
 	@if command -v air > /dev/null; then \
