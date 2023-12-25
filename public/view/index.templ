@@ -1,0 +1,113 @@
+package view
+
+templ Index() {
+	<!DOCTYPE html>
+	<html lang="en">
+		@Head()
+		@Body() {
+			<div id="title-container" class="flex justify-center m-10">
+				<h1 class="mb-4 p-4 text-4xl font-extrabold leading-none tracking-tight text-blue-900 md:text-5xl lg:text-6xl dark:text-white">Document Based Chat Bot</h1>
+			</div>
+			<div id="content-container" class="flex justify-evenly">
+				@Card() {
+					@UploadForm()
+					@InsertArea()
+				}
+				<div id="chatbot-container" class="">
+					@Card() {
+						@Card() {
+							<div class="h-60 w-96 text-white">
+								<p id="answer-area"></p>
+							</div>
+						}
+						@QuerryForm()
+					}
+				</div>
+			</div>
+		}
+	</html>
+}
+
+templ UploadForm() {
+	<form
+ 		id="uploadForm"
+ 		hx-encoding="multipart/form-data"
+ 		hx-post="/upload"
+ 		_="on htmx:xhr:progress(loaded, total) set #progress.value to (loaded/total)*100"
+ 		class="flex-col justify-center"
+	>
+		<div>
+			<label class="bg-gradient-to-r from-black to-blue-400 text-white rounded-md p-2" for="file_input">Choose File</label>
+			<input aria-describedby="file_input_help" id="file_input" type="file"/>
+			<p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PDF files only</p>
+		</div>
+		<div>
+			@Button("Upload")
+		</div>
+		<div>
+			<progress id="uploadProgress" value="0" max="100"></progress>
+		</div>
+	</form>
+}
+
+templ InsertArea() {
+	<form
+ 		id="insertForm"
+ 		hx-get="/insert"
+	>
+		@Button("Insert to Db")
+	</form>
+}
+
+templ QuerryForm() {
+	<form
+ 		id="querryForm"
+ 		hx-post="/querry"
+ 		hx-target="#answer-area"
+	>
+		<div class="w-max">
+			<input type="text" name="text" placeholder="Please ask your question here!" class="w-96"/>
+			@Button("Generate")
+		</div>
+	</form>
+}
+
+templ Card() {
+	<div class="w-max p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+		{ children... }
+	</div>
+}
+
+templ Button(name string) {
+	<button class="bg-gradient-to-r from-black to-blue-400 text-white rounded-md p-2">
+		{ name }
+	</button>
+}
+
+templ SuccesfulInsert() {
+	<p class="bg-green-300 rounded-md p-2">
+		Inserted
+	</p>
+}
+
+templ SuccesfulPrompt(answer string) {
+	<p>
+		{ answer }
+	</p>
+}
+
+templ Body() {
+	<body class="bg-gradient-to-r from-indigo-500 to-red-700 m-10">
+		{ children... }
+	</body>
+}
+
+templ Head() {
+	<head>
+		<title>Doc Bot</title>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<link href="/styles/output.css" rel="stylesheet"/>
+		<script src="https://unpkg.com/htmx.org@1.9.9"></script>
+	</head>
+}
