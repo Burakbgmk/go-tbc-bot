@@ -3,6 +3,7 @@ package ai
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/labstack/echo/v4"
 	"github.com/tmc/langchaingo/chains"
@@ -28,8 +29,9 @@ func QueryToVectorDB(querry string, ctx echo.Context) (map[string]any, error) {
 	}
 
 	namespace := "123123"
+	chromaUrl := os.Getenv("CHROMA_URL")
 	store, err := chroma.New(
-		chroma.WithChromaURL("http://localhost:8000"),
+		chroma.WithChromaURL(chromaUrl),
 		chroma.WithEmbedder(ollamaEmbedder),
 		chroma.WithNameSpace(namespace),
 	)

@@ -53,7 +53,6 @@ func (s *Server) InsertVectorDbHandler(c echo.Context) error {
 	}
 	fmt.Printf("store: %v\n", store)
 
-	// return c.HTML(http.StatusOK, fmt.Sprintf("<p> Documents inserted to DB</p>"))
 	return util.Render(c, view.SuccesfulInsert())
 }
 
@@ -78,7 +77,7 @@ func (s *Server) QueryHandler(c echo.Context) error {
 func (s *Server) UploadHandler(c echo.Context) error {
 	fmt.Println("Uploading handler enters")
 
-	file, err := c.FormFile("file")
+	file, err := c.FormFile("file-input")
 	if err != nil {
 		return err
 	}
@@ -88,7 +87,7 @@ func (s *Server) UploadHandler(c echo.Context) error {
 		return err
 	}
 	defer src.Close()
-	dst, err := os.Create("/Users/burakbogmak/Projects/personal/go-ai-playground/go-tbc-bot/uploads/" + file.Filename)
+	dst, err := os.Create("./uploads/file.pdf")
 	if err != nil {
 		return err
 	}
@@ -97,5 +96,6 @@ func (s *Server) UploadHandler(c echo.Context) error {
 		return err
 	}
 
-	return c.HTML(http.StatusOK, fmt.Sprintf("<p> File uploaded succesfully</p>"))
+	return util.Render(c, view.SuccesfulUpload())
+
 }

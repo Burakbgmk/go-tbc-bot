@@ -36,17 +36,11 @@ templ UploadForm() {
  		_="on htmx:xhr:progress(loaded, total) set #progress.value to (loaded/total)*100"
  		class="flex-col justify-center"
 	>
-		<div>
-			<label class="bg-gradient-to-r from-black to-blue-400 text-white rounded-md p-2" for="file_input">Choose File</label>
-			<input aria-describedby="file_input_help" id="file_input" type="file"/>
-			<p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PDF files only</p>
-		</div>
-		<div>
-			@Button("Upload")
-		</div>
-		<div>
-			<progress id="uploadProgress" value="0" max="100"></progress>
-		</div>
+		<label class="bg-gradient-to-r from-black to-blue-400 text-white rounded-md p-2" for="file_input">Choose File</label>
+		<input aria-describedby="file_input_help" id="file_input" name="file-input" type="file"/>
+		<p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PDF files only</p>
+		@Button("Upload")
+		<progress id="uploadProgress" value="0" max="100"></progress>
 	</form>
 }
 
@@ -93,6 +87,12 @@ templ SuccesfulInsert() {
 templ SuccesfulPrompt(answer string) {
 	<p>
 		{ answer }
+	</p>
+}
+
+templ SuccesfulUpload() {
+	<p class="bg-green-300 rounded-md p-2">
+		Uploaded
 	</p>
 }
 

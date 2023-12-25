@@ -25,4 +25,6 @@ tmp/
 # .env file
 .env
 
-uploads
+uploads/*
+
+!uploads/.gitkeep

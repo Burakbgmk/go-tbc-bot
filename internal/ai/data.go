@@ -3,6 +3,7 @@ package ai
 import (
 	"bytes"
 	"fmt"
+	"os"
 
 	chroma_go "github.com/amikos-tech/chroma-go"
 	"github.com/dslipak/pdf"
@@ -18,7 +19,7 @@ var doclength int
 
 func InsertToVectorDb(ctx echo.Context) (*chroma.Store, error) {
 
-	content, err := GetTextFromPdf("/Users/burakbogmak/Projects/personal/go-ai-playground/go-tbc-bot/uploads/rezengshort.pdf")
+	content, err := GetTextFromPdf("./uploads/file.pdf")
 	if err != nil {
 		return nil, err
 	}
@@ -39,8 +40,10 @@ func InsertToVectorDb(ctx echo.Context) (*chroma.Store, error) {
 
 	namespace := "123123"
 
+	chromaUrl := os.Getenv("CHROMA_URL")
+
 	store, err := chroma.New(
-		chroma.WithChromaURL("http://localhost:8000"),
+		chroma.WithChromaURL(chromaUrl),
 		chroma.WithEmbedder(ollamaEmbedder),
 		chroma.WithNameSpace(namespace),
 		chroma.WithDistanceFunction(chroma_go.COSINE),
