@@ -40,7 +40,7 @@ clean:
 	@rm -f main
 
 css-watch:
-	~/bin/tailwindcss -i ./styles/input.css -o ./styles/output.css --watch
+	~/tailwindcss -i ./styles/input.css -o ./styles/output.css --watch
 
 css:
 	~/bin/tailwindcss -i ./styles/input.css -o ./styles/output.css --minify

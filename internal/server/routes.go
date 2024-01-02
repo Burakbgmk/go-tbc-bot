@@ -22,9 +22,9 @@ func (s *Server) RegisterRoutes() http.Handler {
 	e.Use(middleware.Recover())
 
 	e.Static("/styles", "styles")
+	e.Static("/uploads", "uploads")
 	e.GET("/", s.IndexHandler)
 	e.POST("/upload", s.UploadHandler)
-	e.GET("/insert", s.InsertVectorDbHandler)
 	e.POST("/querry", s.QueryHandler)
 
 	return e
@@ -36,25 +36,7 @@ func (s *Server) IndexHandler(c echo.Context) error {
 	return util.Render(c, component)
 }
 
-func (s *Server) HelloWorldHandler(c echo.Context) error {
-	resp := map[string]string{
-		"message": "Hello World",
-	}
-
-	return c.JSON(http.StatusOK, resp)
-}
-
 var store chroma.Store
-
-func (s *Server) InsertVectorDbHandler(c echo.Context) error {
-	store, err := ai.InsertToVectorDb(c)
-	if err != nil {
-		return err
-	}
-	fmt.Printf("store: %v\n", store)
-
-	return util.Render(c, view.SuccesfulInsert())
-}
 
 func (s *Server) QueryHandler(c echo.Context) error {
 	fmt.Printf("store: %v\n", store)
@@ -96,6 +78,12 @@ func (s *Server) UploadHandler(c echo.Context) error {
 		return err
 	}
 
-	return util.Render(c, view.SuccesfulUpload())
+	store, err := ai.InsertToVectorDb(c)
+	if err != nil {
+		return err
+	}
+	fmt.Printf("store: %v\n", store)
+
+	return util.Render(c, view.SuccesfulUpload(file.Filename, "/uploads/file.pdf"))
 
 }
