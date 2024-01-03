@@ -47,7 +47,7 @@ func (s *Server) QueryHandler(c echo.Context) error {
 	querry := string(body)
 
 	fmt.Println(querry)
-	answer, err := ai.QueryToVectorDB(querry, c)
+	answer, err := ai.QueryToVectorDB(querry, c, filename)
 	if err != nil {
 		return err
 	}
@@ -55,6 +55,8 @@ func (s *Server) QueryHandler(c echo.Context) error {
 
 	return util.Render(c, view.SuccesfulPrompt(val))
 }
+
+var filename string
 
 func (s *Server) UploadHandler(c echo.Context) error {
 	fmt.Println("Uploading handler enters")
@@ -77,13 +79,14 @@ func (s *Server) UploadHandler(c echo.Context) error {
 	if _, err = io.Copy(dst, src); err != nil {
 		return err
 	}
+	filename = file.Filename
 
-	store, err := ai.InsertToVectorDb(c)
+	store, err := ai.InsertToVectorDb(c, filename)
 	if err != nil {
 		return err
 	}
 	fmt.Printf("store: %v\n", store)
 
-	return util.Render(c, view.SuccesfulUpload(file.Filename, "/uploads/file.pdf"))
+	return util.Render(c, view.SuccesfulUpload(filename, "/uploads/file.pdf"))
 
 }

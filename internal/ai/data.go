@@ -17,7 +17,7 @@ import (
 
 var doclength int
 
-func InsertToVectorDb(ctx echo.Context) (*chroma.Store, error) {
+func InsertToVectorDb(ctx echo.Context, filename string) (*chroma.Store, error) {
 
 	content, err := GetTextFromPdf("./uploads/file.pdf")
 	if err != nil {
@@ -38,7 +38,7 @@ func InsertToVectorDb(ctx echo.Context) (*chroma.Store, error) {
 		return nil, err
 	}
 
-	namespace := "123123"
+	namespace := filename
 
 	chromaUrl := os.Getenv("CHROMA_URL")
 

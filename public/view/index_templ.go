@@ -148,7 +148,7 @@ func UploadForm() templ.Component {
 			templ_7745c5c3_Var7 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form id=\"uploadForm\" hx-encoding=\"multipart/form-data\" hx-target=\"#swap-button\" hx-swap=\"innerHTML once\" hx-post=\"/upload\" class=\"flex-col justify-stretch h-52\"><div class=\"flex\"><label class=\"bg-gradient-to-r from-black to-blue-400 text-white rounded-md p-2 w-22 hover:cursor-pointer active:brightness-125 h-10\" for=\"file_input\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form id=\"uploadForm\" hx-encoding=\"multipart/form-data\" hx-target=\"#swap-button\" hx-swap=\"innerHTML\" hx-post=\"/upload\" class=\"flex-col justify-stretch h-52\"><div class=\"flex\"><label class=\"bg-gradient-to-r from-black to-blue-400 text-white rounded-md p-2 w-22 hover:cursor-pointer active:brightness-125 h-10\" for=\"file_input\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -351,7 +351,7 @@ func SuccesfulPrompt(answer string) templ.Component {
 		var templ_7745c5c3_Var18 string
 		templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.JoinStringErrs(answer)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `public/view/index.templ`, Line: 115, Col: 10}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `public/view/index.templ`, Line: 98, Col: 9}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var18))
 		if templ_7745c5c3_Err != nil {
@@ -388,7 +388,7 @@ func SuccesfulUpload(name string, path string) templ.Component {
 		var templ_7745c5c3_Var20 string
 		templ_7745c5c3_Var20, templ_7745c5c3_Err = templ.JoinStringErrs(name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `public/view/index.templ`, Line: 121, Col: 59}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `public/view/index.templ`, Line: 104, Col: 58}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var20))
 		if templ_7745c5c3_Err != nil {
@@ -425,12 +425,12 @@ func SuccesfulUpload(name string, path string) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Var23 := `
-	const modal = document.querySelector("#preview");
-	const openModal = document.querySelector("#s-upload-button");
+	var modal = document.querySelector("#preview");
+	var openModal = document.querySelector("#s-upload-button");
 	openModal.addEventListener("click", () => {
 		modal.showModal();
 	})
-	const closeModal = document.querySelector("#close-prev-button");
+	var closeModal = document.querySelector("#close-prev-button");
 	closeModal.addEventListener("click", () => {
 		modal.close();
 	})

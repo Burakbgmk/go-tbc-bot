@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	chroma_go "github.com/amikos-tech/chroma-go"
 	"github.com/labstack/echo/v4"
 	"github.com/tmc/langchaingo/chains"
 	"github.com/tmc/langchaingo/embeddings"
@@ -13,7 +14,7 @@ import (
 	"github.com/tmc/langchaingo/vectorstores/chroma"
 )
 
-func QueryToVectorDB(querry string, ctx echo.Context) (map[string]any, error) {
+func QueryToVectorDB(querry string, ctx echo.Context, filename string) (map[string]any, error) {
 
 	doclength := 10
 	fmt.Println("doclength is", doclength)
@@ -28,12 +29,13 @@ func QueryToVectorDB(querry string, ctx echo.Context) (map[string]any, error) {
 		return nil, err
 	}
 
-	namespace := "123123"
+	namespace := filename
 	chromaUrl := os.Getenv("CHROMA_URL")
 	store, err := chroma.New(
 		chroma.WithChromaURL(chromaUrl),
 		chroma.WithEmbedder(ollamaEmbedder),
 		chroma.WithNameSpace(namespace),
+		chroma.WithDistanceFunction(chroma_go.COSINE),
 	)
 	if err != nil {
 		return nil, err
