@@ -26,7 +26,7 @@ Here is how I do it;
 
 - Download ollama from https://ollama.ai/ website.
 
-- Run "ollama push mistral" from terminal to use mistral as the model. (llama 2 is also not a bad choice)
+- Run "ollama pull mistral" from terminal to use mistral as the model. (llama 2 is also not a bad choice)
 
 - Install docker if you do not have already.
 
