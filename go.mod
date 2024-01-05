@@ -46,7 +46,3 @@ require (
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
 )
-
-// replace github.com/tmc/langchaingo v0.1.0 => github.com/Burakbgmk/langchaingo v1.0.0
-
-replace github.com/tmc/langchaingo v0.1.0 => /Users/burakbogmak/Library/langchaingo
